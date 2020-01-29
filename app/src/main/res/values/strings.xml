@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GeoQuiz</string>
+    <string name="placeholder_text">Question Placeholder</string>
+    <string name="true_text">True</string>
+    <string name="false_text">False</string>
+    <string name="question_two">What is your name?</string>
+</resources>
