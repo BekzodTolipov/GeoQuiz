@@ -3,11 +3,11 @@ package edu.umsl.bekzod_tolipov;
 public class QuizQuestion {
 
     private Integer id;
-    private String text;
+    private Boolean isTrue;
 
-    public QuizQuestion(Integer id, String text){
+    public QuizQuestion(Integer id, Boolean isTrue){
         this.id = id;
-        this.text = text;
+        this.isTrue = isTrue;
     }
 
     public Integer getId() {
@@ -18,11 +18,11 @@ public class QuizQuestion {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public Boolean getIsTrue() {
+        return isTrue;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setIsTrue(Boolean aTrue) {
+        isTrue = aTrue;
     }
 }

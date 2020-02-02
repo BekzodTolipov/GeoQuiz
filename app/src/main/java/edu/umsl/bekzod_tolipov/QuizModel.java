@@ -9,23 +9,31 @@ public class QuizModel {
 
     public QuizModel(Integer index){
         mQuestions = new ArrayList<>();
-        mQuestions.add(new QuizQuestion(R.string.placeholder_text, ""));
-        mQuestions.add(new QuizQuestion(R.string.question_two, ""));
+        mQuestions.add(new QuizQuestion(R.string.question_brazil, true));
+        mQuestions.add(new QuizQuestion(R.string.question_einstein, true));
+        mQuestions.add(new QuizQuestion(R.string.question_georgia, false));
+        mQuestions.add(new QuizQuestion(R.string.question_libya, false));
+        mQuestions.add(new QuizQuestion(R.string.question_koalas, true));
+
         this.currentIndex = index;
     }
 
+    QuizQuestion getCurrentQuestion(){
+        return  mQuestions.get(currentIndex);
+    }
 
-    public QuizQuestion getQuestionAtIndex(){
-        QuizQuestion question = mQuestions.get(currentIndex);
-        return question;
+    public void advanceToNextQuestion(){
+        currentIndex = (currentIndex + 1) % mQuestions.size();
+        getCurrentQuestion();
     }
 
     public Integer getCurrentIndex(){
         return currentIndex;
     }
 
-    public void increment(){
-        currentIndex++;
+    boolean isAnswerCorrect( boolean answerValue){
+        boolean isTrue = mQuestions.get(currentIndex).getIsTrue();
+        return isTrue == answerValue;
     }
 
 }

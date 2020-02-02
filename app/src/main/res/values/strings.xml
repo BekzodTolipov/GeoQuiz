@@ -3,5 +3,13 @@
     <string name="placeholder_text">Question Placeholder</string>
     <string name="true_text">True</string>
     <string name="false_text">False</string>
-    <string name="question_two">What is your name?</string>
+    <string name="correct_toast">The answer is CORRECT</string>
+    <string name="incorrect_toast">The answer is INCORRECT</string>
+    <string name="question_libya">The capital of Libya is Benghazi.</string>
+    <string name="question_einstein">Albert Einstein was awarded the Nobel Prize in Physics.</string>
+    <string name="question_koalas">Baby koalas are called joeys.</string>
+    <string name="question_georgia">Gone with the Wind takes place in Savannah, Georgia.</string>
+    <string name="question_brazil">Brazil is the only country in the Americas whose official
+        language is Portuguese.</string>
+
 </resources>
