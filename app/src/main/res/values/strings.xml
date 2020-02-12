@@ -11,6 +11,9 @@
     <string name="question_georgia">Gone with the Wind takes place in Savannah, Georgia.</string>
     <string name="question_brazil">Brazil is the only country in the Americas whose official
         language is Portuguese.</string>
-    <string name="cheat_text">cheat_text</string>
+    <string name="cheat_text">Cheat</string>
+    <string name="show_answer_button">Show Answer</string>
+    <string name="warning_text">Are you sure you want to do this?</string>
+    <string name="judgment_toast">Cheating is wrong...</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package edu.umsl.bekzod_tolipov
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,13 +11,19 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity: AppCompatActivity() {
 
     private lateinit var model: QuizModel
+    private var isCheater: Boolean = false
+
+    companion object{
+        const val REQUEST_CODE_CHEAT = 0
+        const val POSITION_KEY = "position"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         savedInstanceState?.let {bundle ->
-            val index = bundle.getInt("QUESTION_INDEX", 0)
+            val index = bundle.getInt(POSITION_KEY, 0)
             model = QuizModel(index)
         }
         if (!::model.isInitialized){
@@ -29,36 +36,59 @@ class MainActivity: AppCompatActivity() {
 
         cheatButton.setOnClickListener {
             val isTrue = model.currentQuestion.isTrue
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            val intent = CheatActivity.newIntent(this, isTrue)
+ //           startActivity(intent)
+            startActivityForResult(intent, REQUEST_CODE_CHEAT)
         }
     }
 
-    var selectionListener= View.OnClickListener { v ->
-        var selectedValue = false
-        if (v.id == R.id.trueButton){
-            selectedValue = true
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != Activity.RESULT_OK) {
+            return
         }
 
-        if (model.isAnswerCorrect(selectedValue)){
-            Toast.makeText(this@MainActivity,
-                    R.string.correct_toast,
-                    Toast.LENGTH_SHORT)
-                            .show()
-        }
-        else{
-            Toast.makeText(this@MainActivity,
-                    R.string.incorrect_toast,
-                    Toast.LENGTH_SHORT)
-                            .show()
-        }
+        if (data == null) { return }
 
-        model.advanceToNextQuestion()
-        questionTextView.setText(model.currentQuestion.id)
+        when (requestCode) {
+            REQUEST_CODE_CHEAT -> {
+                this.isCheater = CheatActivity.wasAnswerShown(data)
+            }
+        }
     }
 
-   override fun onSaveInstanceState(outState: Bundle): Unit {
-       super.onSaveInstanceState(outState)
-       outState.putInt("QUESTION_INDEX", model.currentIndex)
-   }
+    override fun onSaveInstanceState(outState: Bundle): Unit {
+        super.onSaveInstanceState(outState)
+        outState.putInt("QUESTION_INDEX", model.currentIndex)
+    }
+
+    private var selectionListener = object : View.OnClickListener {
+        override fun onClick(v: View) {
+            var selectedValue = false
+            if (v.id == R.id.trueButton) {
+                selectedValue = true
+            }
+
+            val messageResId = if (isCheater) {
+                R.string.judgment_toast
+            } else {
+                if (model.isAnswerCorrect(selectedValue)) {
+                    R.string.correct_toast
+                } else {
+                    R.string.incorrect_toast
+                }
+            }
+
+            Toast.makeText(this@MainActivity,
+                    messageResId,
+                    Toast.LENGTH_SHORT)
+                    .show()
+
+            isCheater = false
+            model.advanceToNextQuestion()
+            questionTextView.setText(model.currentQuestion.id)
+        }
+    }
+
+
 }

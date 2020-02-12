@@ -27,7 +27,6 @@
             android:id="@+id/trueButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="clickedTrue"
             android:text="@string/true_text" />
 
         <Button
